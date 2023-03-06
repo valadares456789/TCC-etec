@@ -1,0 +1,92 @@
+create database trevoice;
+
+
+
+use trevoice;
+
+
+
+create table operador(
+nome_oper varchar(255) not null,
+email_oper varchar(255) not null,
+senha varchar(255) not null,
+nivel_acess int(10) not null,
+avatar varchar(255) not null,
+id_oper int primary key auto_increment
+);
+
+INSERT INTO `operador` VALUES ('thi', 'angu@adm.com.br', '123', 1, 'avatar', null);
+INSERT INTO `operador` VALUES ('angu', 'a@adm.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 1, 'avatar', null);
+
+
+create table cliente(
+nome_cli varchar(255) not null,
+apelido_cli varchar(255),
+email_cli varchar(255) not null,
+contato_cli int not null,
+cpf int,
+cnpj int,
+endereco_cli varchar(255) not null,
+id_cli int primary key auto_increment
+);
+
+CREATE TABLE `cliente` (
+  `nome_cli` varchar(255) NOT NULL,
+  `apelido_cli` varchar(255) DEFAULT NULL,
+  `email_cli` varchar(255) NOT NULL,
+  `contato_cli` int(11) NOT NULL,
+  `cpf` int(11) DEFAULT NULL,
+  `cnpj` int(11) DEFAULT NULL,
+  `endereco_cli` varchar(255) NOT NULL,
+  `id_cli` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+create table venda(
+datas date not null,
+total_venda decimal(8,2) not null,
+quant_produtos int(10) not null,
+pend int(10) not null,
+id_cli int not null,
+id_oper int not null,
+foreign key (id_cli) references cliente (id_cli) on delete cascade on update cascade,
+foreign key (id_oper) references operador(id_oper) on delete cascade on update cascade,
+id_venda int primary key auto_increment
+);
+
+INSERT INTO `venda` VALUES ('26-11-22 ', '500', '3', 1, '15', '7', null);
+INSERT INTO `venda` VALUES ('26-11-22 ', '500', '3', 2, '15', '8', null);
+
+create table produtos(
+sabor varchar(255) not null,
+preco_uni decimal(3,2) not null,
+tipo varchar(255) not null,
+tamanho_pacote int,
+tamanho_uni varchar(255),
+preco_pacote decimal(4,2),
+id_prod int primary key auto_increment
+);
+
+create table vendaprod(
+quant_produtos_uni int(10) not null,
+id_prod int not null,
+id_venda int not null,
+foreign key (id_prod) references produtos (id_prod) on delete cascade on update cascade,
+foreign key (id_venda) references venda (id_venda) on delete cascade on update cascade,
+id_pedido int primary key auto_increment
+);
+
+INSERT INTO `vendaprod` VALUES (10, 1 , 1, null);
+INSERT INTO `vendaprod` VALUES (10, 2 , 2, null);
+INSERT INTO `vendaprod` VALUES (10, 3 , 7, null);
+
+INSERT INTO `vendaprod` VALUES (10, 1 , 8, null);
+INSERT INTO `vendaprod` VALUES (10, 2 , 8, null);
+INSERT INTO `vendaprod` VALUES (10, 3 , 8, null);
+fatura --- (cliente, operador, produtos)
+
+produtos ---
+
+cliente --- 
+
+operador --- 
